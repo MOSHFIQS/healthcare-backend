@@ -31,6 +31,7 @@ const updateSpecialty = catchAsync(
 )
 
 
+
 const getAllSpecialties = catchAsync(
      async (req: Request, res: Response) => {
           const result = await SpecialtyService.getAllSpecialties();
