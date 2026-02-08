@@ -13,6 +13,7 @@ model User {
      updatedAt          DateTime   @updatedAt
      sessions           Session[]
      accounts           Account[]
+     patient            Patient?
 
      @@unique([email])
      @@map("user")
@@ -33,8 +34,6 @@ model Session {
      @@index([userId])
      @@map("session")
 }
-
-
 
 model Account {
      id                    String    @id
