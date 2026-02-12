@@ -2,8 +2,8 @@ import { Router } from "express";
 import { UserController } from "./user.controller";
 import { createAdminZodSchema, createDoctorZodSchema } from "./user.validation";
 import { validateRequest } from "../../middleware/validateRequest";
-import { checkAuth } from "../../middleware/checkAuth";
-import { Role } from "../../../generated/prisma/enums";
+// import { checkAuth } from "../../middleware/checkAuth";
+// import { Role } from "../../../generated/prisma/enums";
 
 const router = Router();
 
