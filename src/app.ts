@@ -9,19 +9,24 @@ import { globalErrorHandler } from "./app/middleware/globalErrorHandler";
 import { notFound } from "./app/middleware/notFound";
 import { IndexRoutes } from "./app/routes";
 import qs from "qs"
+//qs is used to parse query strings in a more robust way than the default query parser in Express. It can handle nested objects and arrays in query strings, which is useful for complex queries.
+import { PaymentController } from "./app/module/payment/payment.controller";
 
 const app: Application = express();
 app.set("query parser", (str : string) => qs.parse(str));
 
-app.set("view engine", "ejs");
-app.set("views",path.resolve(process.cwd(), `src/app/templates`) )
+app.set("view engine", "ejs"); // Set EJS as the view engine
+app.set("views",path.resolve(process.cwd(), `src/app/templates`) ) // Set the views directory to the absolute path of src/app/templates
 
-// app.use(cors({
-//     origin : [envVars.FRONTEND_URL, envVars.BETTER_AUTH_URL, "http://localhost:3000", "http://localhost:5000"],
-//     credentials : true,
-//     methods : ["GET", "POST", "PUT", "DELETE", "PATCH"],
-//     allowedHeaders : ["Content-Type", "Authorization"]
-// }))
+
+app.post("/webhook", express.raw({ type: "application/json" }), PaymentController.handleStripeWebhookEvent)
+
+app.use(cors({
+    origin : [envVars.FRONTEND_URL, envVars.BETTER_AUTH_URL, "http://localhost:3000", "http://localhost:5000"],
+    credentials : true,
+    methods : ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders : ["Content-Type", "Authorization"]
+}))
 
 app.use("/api/auth", toNodeHandler(auth))
 
@@ -30,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser()) // Middleware to parse cookies
 
 app.use("/api/v1", IndexRoutes);
 
