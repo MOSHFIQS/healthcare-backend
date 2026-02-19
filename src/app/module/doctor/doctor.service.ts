@@ -6,48 +6,46 @@ import { IUpdateDoctorPayload } from "./doctor.interface";
 import { IQueryParams } from "../../interface/query.interface";
 import { Doctor, Prisma } from "../../../generated/prisma/client";
 import { QueryBuilder } from "../../utils/QueryBuilder";
-import { doctorFilterableFields, doctorIncludeConfig, doctorSearchableFields } from "./doctor.constant";
+import {
+     doctorFilterableFields,
+     doctorIncludeConfig,
+     doctorSearchableFields,
+} from "./doctor.constant";
 
-const getAllDoctors = async (query : IQueryParams) => {
+const getAllDoctors = async (query: IQueryParams) => {
+     const queryBuilder = new QueryBuilder<
+          Doctor,
+          Prisma.DoctorWhereInput,
+          Prisma.DoctorInclude
+     >(prisma.doctor, query, {
+          searchableFields: doctorSearchableFields,
+          filterableFields: doctorFilterableFields,
+     });
 
-    const queryBuilder = new QueryBuilder<Doctor, Prisma.DoctorWhereInput, Prisma.DoctorInclude>(
-        prisma.doctor,
-        query,
-        {
-            searchableFields: doctorSearchableFields,
-            filterableFields: doctorFilterableFields,
-        }
-    )
+     const result = await queryBuilder
+          .search()
+          .filter()
+          .where({
+                 isDeleted: false,
+          })
+          .include({
+               user: true,
+               // specialties: true,
+               specialties: {
+                    include: {
+                         specialty: true,
+                    },
+               },
+          })
+          .dynamicInclude(doctorIncludeConfig)
+          .paginate()
+          .sort()
+          .fields()
+          .execute();
 
-    const result = await queryBuilder
-        .search()
-        .filter()
-        .where({
-            isDeleted: false,
-        })
-        .include({
-            user: true,
-            // specialties: true,
-            specialties: {
-                include:{
-                    specialty: true
-                }
-            },
-        })
-        .dynamicInclude(doctorIncludeConfig)
-        .paginate()
-        .sort()
-        .fields()
-        .execute();
-
-        console.log(result);
-    return result;
-}
-
-
-
-
-
+     console.log(result);
+     return result;
+};
 
 const getDoctorById = async (id: string) => {
      const doctor = await prisma.doctor.findUnique({
