@@ -3,7 +3,7 @@ import { UserStatus } from "../../../generated/prisma/enums";
 import AppError from "../../errorHelpers/AppError";
 import { prisma } from "../../lib/prisma";
 import { IUpdateDoctorPayload } from "./doctor.interface";
-import { IQueryParams } from "../../interface/query.interface";
+import { IQueryParams } from "../../interfaces/query.interface";
 import { Doctor, Prisma } from "../../../generated/prisma/client";
 import { QueryBuilder } from "../../utils/QueryBuilder";
 import {

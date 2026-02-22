@@ -8,7 +8,7 @@ import {
      PrismaNumberFilter,
      PrismaStringFilter,
      PrismaWhereConditions,
-} from "../interface/query.interface";
+} from "../interfaces/query.interface";
 
 // T = Model Type
 export class QueryBuilder<

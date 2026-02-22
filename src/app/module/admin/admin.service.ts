@@ -3,7 +3,7 @@ import { UserStatus } from "../../../generated/prisma/enums";
 import AppError from "../../errorHelpers/AppError";
 import { prisma } from "../../lib/prisma";
 import { IUpdateAdminPayload } from "./admin.interface";
-import { IRequestUser } from "../../interface/requestUser.interface";
+import { IRequestUser } from "../../interfaces/requestUser.interface";
 
 const getAllAdmins = async () => {
      const admins = await prisma.admin.findMany({

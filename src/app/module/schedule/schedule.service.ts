@@ -5,7 +5,7 @@ import { QueryBuilder } from "../../utils/QueryBuilder";
 import { scheduleFilterableFields, scheduleIncludeConfig, scheduleSearchableFields } from "./schedule.constant";
 import { convertDateTime } from "./schedule.utils";
 import { ICreateSchedulePayload, IUpdateSchedulePayload } from "./schedule.interface";
-import { IQueryParams } from "../../interface/query.interface";
+import { IQueryParams } from "../../interfaces/query.interface";
 
 
 const createSchedule = async (payload: ICreateSchedulePayload) =>{
