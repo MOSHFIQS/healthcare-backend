@@ -1,10 +1,5 @@
 import { Prisma } from "../../../generated/prisma/client"
 
-export const scheduleSearchableFields = [
-    'id',
-    'startDateTime',
-    'endDateTime',
-]
 export const scheduleFilterableFields = [
     'id',
     'startDateTime',
@@ -12,6 +7,11 @@ export const scheduleFilterableFields = [
     // 'appointments.doctors.id',
 ]
 
+export const scheduleSearchableFields = [
+    'id',
+    'startDateTime',
+    'endDateTime',
+]
 
 export const scheduleIncludeConfig : Partial<Record<keyof Prisma.ScheduleInclude, Prisma.ScheduleInclude[keyof Prisma.ScheduleInclude]>> ={
     appointments: {

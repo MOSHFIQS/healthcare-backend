@@ -1,20 +1,18 @@
-import { prisma } from "../../lib/prisma";
 import { addHours, addMinutes, format } from "date-fns";
 import { Prisma, Schedule } from "../../../generated/prisma/client";
+import { IQueryParams } from "../../interfaces/query.interface";
+import { prisma } from "../../lib/prisma";
 import { QueryBuilder } from "../../utils/QueryBuilder";
 import { scheduleFilterableFields, scheduleIncludeConfig, scheduleSearchableFields } from "./schedule.constant";
-import { convertDateTime } from "./schedule.utils";
 import { ICreateSchedulePayload, IUpdateSchedulePayload } from "./schedule.interface";
-import { IQueryParams } from "../../interfaces/query.interface";
-
+import { convertDateTime } from "./schedule.utils";
 
 const createSchedule = async (payload: ICreateSchedulePayload) =>{
     const { startDate, endDate, startTime, endTime } = payload;
 
     const interval = 30;
 
-    const currentDate = new Date(startDate); 
-
+    const currentDate = new Date(startDate);
     const lastDate = new Date(endDate);
 
     const schedules = [];
